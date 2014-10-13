@@ -4,7 +4,7 @@ import Control.Monad
  
 arbitaryCoin = do 
  x <- string "("
- y <- manyTill ( (try arbitaryCoin) <|>  (anyChar >>= return . (:[])) ) (string ")") 
+ y <- manyTill ( arbitaryCoin <|>  (anyChar >>= return . (:[])) ) (string ")") 
  return (x++(concat y)++")")
   
 parser = do
