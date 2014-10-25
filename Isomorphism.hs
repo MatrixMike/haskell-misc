@@ -1,23 +1,34 @@
 {-# LANGUAGE MultiParamTypeClasses #-}  
-{-# LANGUAGE FlexibleInstances #-}  
+{-# LANGUAGE FlexibleInstances #-} 
+{-# LANGUAGE NoMonomorphismRestriction #-} 
+{-# LANGUAGE IncoherentInstances #-}
 
 module Isomorphism where
 
 import Data.Array
 
 class Isomorphism a b where
- from :: a -> b
- to :: b -> a
- 
-instance Isomorphism Bool Float where
-  from True = 1.0
-  from False = 0.0
-  to 1.0 = True
-  to 0.0 = False
+ to :: a -> b
+ from :: b -> a
 
-
-instance Isomorphism [a] (Array Int a) where
-  from xs = array (0,length xs-1) (zip  [0..] xs)
-  to array = elems array
+isomorphic :: (Eq a,Eq b,Isomorphism a b) => a -> b -> Bool
+isomorphic a b = to a == b || a == from b
   
-  {- example from [1,2,3::Integer] :: Array Int Integer -}
+instance Enum a => Isomorphism a Bool where
+  to = toEnum . fromEnum
+  from = toEnum . fromEnum
+  
+instance Isomorphism [a] Bool where
+  to [] = False
+  to _ = True
+  from True = (undefined:[])
+  from False = []
+ 
+instance Isomorphism [a] (Array Int a) where
+  to xs = array (0,length xs-1) (zip  [0..] xs)
+  from array = elems array
+  
+main = do 
+  print (from False::[Int])
+  print (0.0 `isomorphic` False)
+  print (([]::[Int]) `isomorphic` array (0,-1) ([]::[(Int,Int)]))
