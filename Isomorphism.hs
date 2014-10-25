@@ -31,4 +31,4 @@ instance Isomorphism [a] (Array Int a) where
 main = do 
   print (from False::[Int])
   print (0.0 `isomorphic` False)
-  print (([]::[Int]) `isomorphic` array (0,-1) ([]::[(Int,Int)]))
+  print ([8::Int] `isomorphic` listArray (0,0::Int) [8::Int])
