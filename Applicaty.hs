@@ -1,4 +1,7 @@
 
+
+ -- define applicatives in terms of monads
+
 import Control.Monad
 
 class (Monad m,Functor m) => Applicaty m where
