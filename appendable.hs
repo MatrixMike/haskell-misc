@@ -5,6 +5,9 @@ prepend x xs = \y -> (x : xs y)
 append x xs = \y -> (xs (x : y))
 toRegular xs = xs []
 
+concatList xs ys = \y -> xs (ys y)
+
+--  toRegular $ concatList ( append 5 $ singleTon 1) (append 4 $ singleTon 2)
 
 prependRegular x xs = x :xs
 appendRegular x xs = xs ++ [x]
@@ -14,6 +17,7 @@ applyAll fs v = foldr ($) v fs
 eg1 = sum $ applyAll (replicate 20000 (appendRegular 1)) [1]
 
 eg2 = sum $ toRegular $ applyAll (replicate 20000 (append 1)) (singleTon 1)
+
 
 {-
  -
@@ -25,6 +29,11 @@ eg2 = sum $ toRegular $ applyAll (replicate 20000 (append 1)) (singleTon 1)
 20001
 (0.02 secs, 9104240 bytes)
 -}
+
+
+
+
+
 
 data DoubleEnded a = DoubleEnded (Appendable a) (Appendable a)
 
@@ -40,3 +49,5 @@ takeBackwards x (DoubleEnded _ ys) = take x (toRegular ys)
 eg3 = take 300 $ reverse $ applyAll (replicate 200000 (prependRegular 4)) [3]
 
 eg4 = takeBackwards 300 $  applyAll (replicate 200000 (prependDoubleEnd 5)) emptyDouble
+
+
