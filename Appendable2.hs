@@ -14,6 +14,7 @@ sumTree (Branch x y) = sumTree x + sumTree y
 sumTree (Leaf x) = x
 
 eg2 = sumTree $ concatenateTrees (fromList [1,2]) (fromList [3,4])
+eg3 = treeToList $ concatenateTrees (fromList [1,2,3]) (fromList [10,20])
 
 treeToList tree = (treeToList' tree) []
 treeToList' (Branch x y) = \z -> (treeToList' x) ((treeToList' y) z)
