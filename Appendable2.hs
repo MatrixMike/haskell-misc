@@ -20,6 +20,8 @@ treeToList tree = (treeToList' tree) []
 treeToList' (Branch x y) = \z -> (treeToList' x) ((treeToList' y) z)
 treeToList' (Leaf x) = \y -> x :y 
 
+data TreeZipper = TreeZipper BinaryTree BinaryTree
+
 
 
 
