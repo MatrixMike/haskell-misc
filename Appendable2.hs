@@ -22,6 +22,9 @@ treeToList' (Leaf x) = \y -> x :y
 
 data TreeZipper a = TreeZipper (BinaryTree a) (BinaryTree a)
 
+treeToList tree = (treeToList' [] tree)
+treeToList' s (Branch x y) = treeToList' (treeToList' s x) y
+treeToList' s (Leaf x) = x:s
 
 
 
