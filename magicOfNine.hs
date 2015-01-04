@@ -1,1 +1,3 @@
-take 12  $ map ( sum .map ( digitToInt) . filter (/= '.') . show ) $ iterate (/2) 360
+
+
+main = print $ take 12  $ map ( sum .map ( digitToInt) . filter (/= '.') . show ) $ iterate (/2) 360
