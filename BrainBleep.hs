@@ -42,7 +42,7 @@ myParser = sepBy (many (try doUntilZero <|> try ops)) newline >>= return . Node 
 
 exampleAst src = parse myParser "" (filter (/=' ') src)
 
-initArray = listArray (0,1000) (replicate 1000 0)
+initArray = listArray (0,30000-1) (replicate 30000 0)
 
 interpretBrainBleep src = runAst' (0,initArray) ((\(Right x) -> x) (exampleAst src)) >> return ()
 
