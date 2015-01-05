@@ -1,5 +1,3 @@
-{-# Language NoMonomorphismRestriction #-}
-
 import Data.Array
 import Text.ParserCombinators.Parsec
 import System.IO.Unsafe
@@ -8,7 +6,7 @@ import Data.Maybe
 import Control.Monad
 import Data.Char
 
-data brainBleepOp = 
+data BrainBleepOp = 
    Program 
  | Increment 
  | Decrement
@@ -20,7 +18,9 @@ data brainBleepOp =
  deriving (Show,Read)
  
 
-exampleSource = filter (/=' ') $ unsafePerformIO (readFile "../brainf---/zero-to-nine.bf")
+main = do 
+ interpretBrainBleep 
+  "+++++\n+++++\n+++++\n+++++\n+++++\n+++++\n+++++\n+++++\n+++++\n+++.+.+.+.+.+.+.+.+.+.\n"
 
 opDefs = [('+',Increment)
        ,('-' , Decrement)
@@ -40,11 +40,11 @@ doUntilZero = do
 
 myParser = sepBy (many (try doUntilZero <|> try ops)) newline >>= return . Node Program . concat
 
-exampleAst = parse myParser "" exampleSource
+exampleAst src = parse myParser "" (filter (/=' ') src)
 
 initArray = listArray (0,1000) (replicate 1000 0)
 
-runAst = runAst' (0,initArray) ((\(Right x) -> x) exampleAst) >> return ()
+interpretBrainBleep src = runAst' (0,initArray) ((\(Right x) -> x) (exampleAst src)) >> return ()
 
 runAst' (cursor,array) l@(Node DoUntilZero xs) = 
   if (array!cursor == 0) then do
@@ -59,6 +59,3 @@ runAst' (cursor,array) (Node ShiftLeft _) = do putStr "" >> return (cursor-1,arr
 runAst' (cursor,array) (Node ShiftRight _) = do putStr "" >> return (cursor+1,array)
 runAst' (cursor,array) (Node GetChar _) = do getChar >>= \c -> return (cursor,array // [(cursor,ord c)])
 runAst' (cursor,array) (Node PutChar _) = do putChar (chr$ array ! cursor) >> return (cursor,array)
-
-
-
