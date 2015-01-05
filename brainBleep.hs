@@ -8,7 +8,7 @@ import Data.Maybe
 import Control.Monad
 import Data.Char
 
-data BrainStarOp = 
+data brainBleepOp = 
    Program 
  | Increment 
  | Decrement
