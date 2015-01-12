@@ -12,12 +12,13 @@ import DynFlags
 targetFile = "B.hs"
  
 main = do
-   res <- example
+   res@(a,b,c) <- example
 #if __GLASGOW_HASKELL__ > 704
    str <- runGhc (Just libdir) $ do
       dflags <- getSessionDynFlags
       return $ showSDoc dflags $ ppr res
-   putStrLn str
+   putStrLn str  
+   print c
 #else
    putStrLn $ showSDoc ( ppr res )
 #endif
@@ -46,4 +47,4 @@ example =
  
         g <- getModuleGraph
         mapM showModule g     
-        return $ (parsedSource d,"/n-----/n",  typecheckedSource d)
+        return $ (parsedSource d, "hello",  typecheckedSource d)
