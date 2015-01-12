@@ -14,7 +14,10 @@ targetFile = "B.hs"
 main = do
    res <- example
 #if __GLASGOW_HASKELL__ > 704
-   putStrLn $ showSDoc tracingDynFlags ( ppr res )
+   str <- runGhc (Just libdir) $ do
+      dflags <- getSessionDynFlags
+      return $ showSDoc dflags $ ppr res
+   putStrLn str
 #else
    putStrLn $ showSDoc ( ppr res )
 #endif
