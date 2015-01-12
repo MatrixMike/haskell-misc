@@ -19,9 +19,3 @@ sequenceUsingST xs = runST $ do
    _ -> writeSTRef result [[]]
   readSTRef result 
 
-sequenceUsingST2 xss = runST $ do
-  results <- newSTRef [[]]
-  forM xss $ \xs -> do
-    results' <- readIORef results
-    writeSTRef (map (\x->++[x]) results') results
-  readSTRef results
