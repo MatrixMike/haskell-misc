@@ -1,7 +1,21 @@
-import Control.Monad.Trans 
+
+{-# LANGUAGE NoMonomorphismRestriction #-}
+
+import Control.Monad
+import Control.Monad.Trans
 import Control.Monad.Trans.Maybe
+import Control.Monad.State
+
+isValid = const True
+
 
 main = do
-       runMaybeT $ do { a <- MaybeT( return (Just 3)) ; lift (print a)}
-       runMaybeT $ do { a <- MaybeT( Nothing) ; lift (print a)}
-       return ()
+       print $ evalState (do {   modify (+1) 
+                               ; modify (+1) 
+                               ; runMaybeT getValidPassphrase 
+                               ; x <- get
+                               ;  return x } ) 0
+       
+getValidPassphrase = do s <- lift ( modify (*100) >> return 7)
+                        guard (isValid s) 
+                        return s
