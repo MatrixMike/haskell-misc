@@ -6,16 +6,17 @@ import Control.Monad.Trans
 import Control.Monad.Trans.Maybe
 import Control.Monad.State
 
-isValid = const True
-
 
 main = do
-       print $ evalState (do {   modify (+1) 
-                               ; modify (+1) 
-                               ; runMaybeT getValidPassphrase 
-                               ; x <- get
-                               ;  return x } ) 0
+       print $ runState (do { 
+                                 modify (+10)
+                               ; x <- evalStateT innerState 1
+                               ;  return x })100
        
-getValidPassphrase = do s <- lift ( modify (*100) >> return 7)
-                        guard (isValid s) 
-                        return s
+innerState = do 
+                     lift (modify (+9000))
+                     modify (+10000)
+                     return (1000000)
+                        
+                                      
+                                       
