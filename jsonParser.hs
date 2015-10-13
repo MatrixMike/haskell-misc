@@ -2,8 +2,10 @@
 
 import Text.ParserCombinators.Parsec
 import Data.Maybe
+import Control.Monad
+import Data.Char
 
-main = print $ map (parse parser "") ["{\"a\":[true], false: { null : 3.2e-5  }  }"]
+main = print $ map (parse parser "") ["{ \"a\t\n\\u007F\" : [true] ,false:{null: -3.2e-5 }}"]
 
 data JValue = JObject [(JKey,JValue)]
           | JList [JValue]
@@ -21,11 +23,9 @@ data JNum = JNumInt Int | JNumFraction Double
      
 spaceOut p = between (many space) (many space) p   
 
-parseNull = do 
-  string "null" 
-  return JKeyNull
+parseNull = string "null" >> return JKeyNull
 
-parseKey = choice (map (try . spaceOut)  [parseBool,parseString,parseNum,parseNull])
+parseKey = choice (map try [parseBool,parseString,parseNum,parseNull])
     
 parseSingle = fmap JSingle parseKey
 
@@ -35,33 +35,44 @@ parseBool =  do
                            
 parseString = do 
     char '"'
-    str <- manyTill anyChar (char '"') 
+    str <- manyTill (parseEscapeChar <|> anyChar) (char '"') 
     return (JKeyString str)                              
-                              
+
+parseEscapeChar = do 
+    char '\\'
+    eitherEscapeChar <- (fmap Left (char 'u' >> parseUnicodePointCode)) <|> (fmap Right (parseAsciiEscapeKey))
+    let escapeSequence = case eitherEscapeChar of 
+          Left hexCode -> "\\x"++hexCode
+          Right charKey -> "\\"++[charKey]
+    return (read ("'"++escapeSequence++"'") :: Char)  
+    
+parseAsciiEscapeKey = oneOf "\\/bfnrt"
+parseUnicodePointCode = replicateM 4 (satisfy isHexDigit)
+    
 parseKeyValuePair = do
-  k <- parseKey 
-  spaceOut $ char ':'
+  k <- spaceOut parseKey 
+  char ':'
   o <- parseValue 
   return (k,o)     
 
-parseObject = spaceOut $ do
+parseObject = do
  char '{'
  pairs <- sepBy parseKeyValuePair (char ',')
  char '}'
  return (JObject pairs)
 
-parseList = spaceOut $ do
+parseList = do
  char '['
  values <- sepBy parseValue (char ',')
  char ']'
  return (JList values)
   
-parseValue = choice [parseObject,parseList,parseSingle]
+parseValue = choice (map (try . spaceOut) [parseObject,parseList,parseSingle])
     
 parser = do
   b <- parseValue
   eof
-  return (b)
+  return b
 
 parseSign = char '-'
 parseNatChars = many1 (oneOf "0123456789")
@@ -72,21 +83,24 @@ parseExponentPart = do
   str <- parseNatChars 
   return (read (sign ++ str) :: Double)
 
-applyIf True f x = f x
-applyIf _ _ x = x
-
 caseMaybe m f a = case m of 
  (Just b) -> f a b
  _ -> a
  
 raise n e = n * (10**e) 
+raiseInt n e = n * (10^(round e)) 
 
 parseNum = do
-  sign <- optionMaybe parseSign
+  sign <- fmap maybeToList $ optionMaybe parseSign
   natpart <- parseNatChars
   fracpart <- optionMaybe parseFractionalPart
   expo <- optionMaybe parseExponentPart
-  return $ JKeyNum $ case fracpart of 
-    Just fracpart -> JNumFraction ( caseMaybe expo raise ( applyIf (isJust sign) (*(-1)) (read (natpart++"."++fracpart):: Double)) )
-    _ -> JNumInt (applyIf (isJust sign) (*(-1)) $ (read natpart :: Int))
-  
+  let isFractional = maybe False (<0) expo || isJust fracpart
+  let fracpart' = fromMaybe "0" fracpart
+  return $ JKeyNum $ case isFractional of 
+    True -> JNumFraction 
+        $ caseMaybe expo raise
+        $ (read (sign++natpart++"."++fracpart'):: Double)
+    False -> JNumInt 
+        $ caseMaybe expo raiseInt
+        $ (read (sign++natpart):: Int)
