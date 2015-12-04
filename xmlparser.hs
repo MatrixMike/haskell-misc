@@ -75,4 +75,25 @@ parser = do
   eof
   return (b)
   
-main = print $ map (parse parser "") [ "<one green='blue'>five<two>to you</two></one>"]
+  
+showAttribute (x,y) = x++"="++"\""++y++"\""
+showAttributes atts = concat $ intersperse " " $ map showAttribute atts
+  
+showTag (Tag attr str inner) = case inner of 
+   [] -> "<"++str++attr''++"/>"
+   xs -> "<"++str++attr''++">"++(concatMap showTagInnards inner)++"</"++str++">"
+   where attr'' = if null attr' then attr'
+                                else " "++attr'
+         attr' = showAttributes attr
+
+showTagInnards innard = case innard of
+  (TagString str) -> str
+  (TagInner inner) -> showTag inner
+ 
+main = do 
+       let str = "<one green='blue'>five<two>to you</two></one>"
+       print str
+       let [Right v] =  map (parse parser "") [ str]
+       print v
+       putStrLn (showTag v)
+   
