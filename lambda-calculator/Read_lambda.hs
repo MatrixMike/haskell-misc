@@ -40,11 +40,11 @@ readFreeVariables xs = do
 readVariables :: [Char] -> Either [Char] [Variable]
 readVariables [] = Left "readVariables: empty List"
 readVariables (x:xs) | isAlpha x = do { r <- readSpaced' readVariables xs ; return (Variable x : r) } 
-                     | otherwise = Left "readVariables: Should be alphabetical"
+                     | otherwise = Left ("readVariables: Should be alphabetical. Given"++[x])
 
 readVariable :: [Char] -> Either String Variable
-readVariable = (x:xs) | isAlpha x = Variable x
-                      | otherwise = Left "readVariable: Should be alphabetical"
+readVariable (x:xs) | isAlpha x = Right (Variable x)
+                    | otherwise = Left ("readVariable: Should be alphabetical. Given "++[x])
 
 readSpaced' :: ([Char] -> Either [Char] [a]) -> [Char] -> Either [Char] [a]
 readSpaced' continue [] = Right []
