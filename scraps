@@ -1,0 +1,5 @@
+
+Prelude Data.Generics.Uniplate.Direct Control.Monad.State> runState (transformM (\xs -> modify (+1) >> return (case xs of {(x:xs) -> (x:x:xs) 
+;  [] -> [] })) "abcdef") 0 
+
+("aabbccddeeff",7)
