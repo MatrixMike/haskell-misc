@@ -6,7 +6,7 @@ import Data.Either
 import Data.List
 import Data.Char
 
-data Tag = Tag [(String,String)] String [TagContent]
+data Tag = Tag [(String,String)] String (Maybe [TagContent])
   deriving (Show,Eq)
   
 data TagContent = TagString String 
@@ -58,7 +58,7 @@ groupEithers xs = map (\xs@(x:_) -> either (const (Left (lefts xs))) (const (Rig
  
 tagWithoutContent = do
   (x,a) <- tagWithoutContent'
-  return (Tag a x [])
+  return (Tag a x Nothing)
 
   
 tagWithoutContent' = do 
@@ -71,9 +71,9 @@ tagWithoutContent' = do
 
 closedTag = do
  (x,a) <- openTag
- y <- manyTill ( try (closedTag >>= return . Left) <|> ((noneOf "<>") >>= return . Right)) (try $ closeTag x)
+ y <- manyTill ( try (fragmentParse >>= return . Left) <|> ((noneOf "<>") >>= return . Right)) (try $ closeTag x)
  let s = map (either (TagInner . head) TagString) (groupEithers y)
- return (Tag a x s)
+ return (Tag a x (Just s))
   
 fragmentParse = do
   b <- closedTag  
@@ -88,8 +88,8 @@ showAttribute (x,y) = x++"="++"\""++y++"\""
 showAttributes atts = concat $ intersperse " " $ map showAttribute atts
   
 showTag (Tag attr str inner) = case inner of 
-   [] -> "<"++str++attr''++"/>"
-   xs -> "<"++str++attr''++">"++(concatMap showTagInnards inner)++"</"++str++">"
+   Nothing -> "<"++str++attr''++"/>"
+   (Just xs) -> "<"++str++attr''++">"++(concatMap showTagInnards xs)++"</"++str++">"
    where attr'' = if null attr' then attr'
                                 else " "++attr'
          attr' = showAttributes attr
@@ -101,5 +101,5 @@ showTagInnards innard = case innard of
 main = do 
        let str = "<one green=\"blue\">five<two>to you</two></one>"
        print str
-       let rs =  map (parse fullParser "") [str,"<single/>"]
+       let rs =  map (parse fullParser "") [str,"<single/>","<nocont></nocont>"]
        mapM_ (either (const (print "fail")) (putStrLn . showTag)) rs
