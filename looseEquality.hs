@@ -12,3 +12,10 @@ class MyEq a b where
 instance ( Num a, Eq a) => MyEq a [Char] where
   0 == "" = True
   _ == _ = False 
+  
+  
+{-
+0 == "" 
+
+=> True
+-}
