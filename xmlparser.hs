@@ -1,4 +1,6 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
+{-# LANGUAGE FlexibleContexts #-}
+
 import Text.ParserCombinators.Parsec
 import Control.Monad
 import Data.Monoid
@@ -99,7 +101,7 @@ showTagInnards innard = case innard of
   (TagInner inner) -> showTag inner
  
 main = do 
-       let str = "<one green=\"blue\">five<two>to you</two></one>"
+       let str = "<one green=\"blue\">five<two>  <![CDATA[ hi  ]]>  </two></one>"
        print str
        let rs =  map (parse fullParser "") [str,"<single/>","<nocont></nocont>"]
        mapM_ (either (const (print "fail")) (putStrLn . showTag)) rs
