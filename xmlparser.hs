@@ -13,6 +13,7 @@ data Tag = Tag [(String,String)] String (Maybe [TagContent])
   
 data TagContent = TagString String 
                 | TagInner Tag
+                | TagCDATA String
    deriving (Show,Eq)
 
 spaceOut p = between (many space) (many space) p   
@@ -71,6 +72,14 @@ tagWithoutContent' = do
   string "/>"
   return attrs
 
+cdata = do
+  x <- cdata'
+  return (TagCDATA x)                                                                                                                                                                         
+
+cdata' = do
+ string "<![CDATA["
+ many1Till anyChar (string "]]>")
+
 closedTag = do
  (x,a) <- openTag
  y <- manyTill ( try (fragmentParse >>= return . Left) <|> ((noneOf "<>") >>= return . Right)) (try $ closeTag x)
@@ -82,7 +91,7 @@ fragmentParse = do
   return b
 
 fullParser =do 
-            x <- try tagWithoutContent <|> fragmentParse
+            x <- try tagWithoutContent <|> fragmentParse 
             eof 
             return x
   
@@ -100,6 +109,10 @@ showTagInnards innard = case innard of
   (TagString str) -> str
   (TagInner inner) -> showTag inner
  
+
+q = parse cdata "" "<![CDATA[ hi  ]]>"
+
+
 main = do 
        let str = "<one green=\"blue\">five<two>  <![CDATA[ hi  ]]>  </two></one>"
        print str
