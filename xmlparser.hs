@@ -1,23 +1,29 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
-{-# LANGUAGE FlexibleContexts #-}
-
-import Text.ParserCombinators.Parsec
+{-# LANGUAGE FlexibleContexts #-} 
+import Text.ParserCombinators.Parsec 
 import Control.Monad
 import Data.Monoid
 import Data.Either
 import Data.List
 import Data.Char
 
+keys = map fst
+escapeCodes = 
+  [("gt",">")
+  ,("lt","<")
+  ,("amp","&")
+  ,("quot","\"")
+  ,("apos","'")]
+
+
 data Tag = Tag [(String,String)] String (Maybe [TagContent])
   deriving (Show,Eq)
   
 data TagContent = TagString String 
                 | TagInner Tag
-                | TagCDATA String
    deriving (Show,Eq)
 
 spaceOut p = between (many space) (many space) p   
-   
 attr = do
   attr <- spaceOut $ many1 (satisfy (liftM2 ((not.).(||)) isSpace (`elem` "=<>")))
   string "="
@@ -72,13 +78,6 @@ tagWithoutContent' = do
   string "/>"
   return attrs
 
-cdata = do
-  x <- cdata'
-  return (TagCDATA x)                                                                                                                                                                         
-
-cdata' = do
- string "<![CDATA["
- many1Till anyChar (string "]]>")
 
 closedTag = do
  (x,a) <- openTag
@@ -108,9 +107,24 @@ showTag (Tag attr str inner) = case inner of
 showTagInnards innard = case innard of
   (TagString str) -> str
   (TagInner inner) -> showTag inner
- 
 
-q = parse cdata "" "<![CDATA[ hi  ]]>"
+
+escapeCode = do 
+             char '&' 
+             x <- choice (map string (keys escapeCodes) ) 
+             char ';'
+             return x
+
+w = parse escapeCode "" "&lt;"
+
+
+replaceParser parser = (\(Right x) ->x) .   parse (replaceParser' parser) "" 
+
+replaceParser' parser = replaceParser'' parser (anyChar >>=(return . (:[])))
+
+replaceParser'' parser p2 = do 
+        	            xs <- many (try parser <|> p2 )
+                            return (concat xs)
 
 
 main = do 
