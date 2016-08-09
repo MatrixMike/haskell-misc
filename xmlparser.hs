@@ -21,6 +21,7 @@ data Tag = Tag [(String,String)] String (Maybe [TagContent])
   
 data TagContent = TagString String 
                 | TagInner Tag
+                | TagCData String
    deriving (Show,Eq)
 
 spaceOut p = between (many space) (many space) p   
@@ -81,7 +82,7 @@ tagWithoutContent' = do
 
 closedTag = do
  (x,a) <- openTag
- y <- manyTill ( try (fragmentParse >>= return . Left) <|> ((noneOf "<>") >>= return . Right)) (try $ closeTag x)
+ y <- manyTill ( try (fragmentParse >>= return . Left) <|> (noneOf "><" >>= return . Right)) (try $ closeTag x)
  let s = map (either (TagInner . head) TagString) (groupEithers y)
  return (Tag a x (Just s))
   
@@ -118,7 +119,19 @@ escapeCode = do
 w = parse escapeCode "" "&lt;"
 
 
-replaceParser parser = (\(Right x) ->x) .   parse (replaceParser' parser) "" 
+cdata = do
+   x <- cdata'
+   return (TagCData x)                                                                                                                                                                         
+ 
+cdata' = do
+ string "<![CDATA["
+ many1Till anyChar (string "]]>")
+    
+q = parse cdata "" "<![CDATA[ hi  ]]>"
+
+
+
+replaceParser parser = (\(Right x) ->x) .  parse (replaceParser' parser) "" 
 
 replaceParser' parser = replaceParser'' parser (anyChar >>=(return . (:[])))
 
@@ -126,9 +139,8 @@ replaceParser'' parser p2 = do
         	            xs <- many (try parser <|> p2 )
                             return (concat xs)
 
-
 main = do 
-       let str = "<one green=\"blue\">five<two>  <![CDATA[ hi  ]]>  </two></one>"
+       let str = "<one green=\"blue\">five<two>  <![CDATA[ hello  </two>  ]]>    </two></one>"
        print str
        let rs =  map (parse fullParser "") [str,"<single/>","<nocont></nocont>"]
-       mapM_ (either (const (print "fail")) (putStrLn . showTag)) rs
+       mapM_ (either (const (print "fail")) (\x -> mapM_ putStrLn [showTag x,show x] )) rs
