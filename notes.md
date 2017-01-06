@@ -13,3 +13,9 @@ invalid character
 import System.IO
 hSetEncoding utf8
 ```
+
+use optimised compiled code in ghci
+
+```
+ghci -fobject-code -O2 ff.hs 
+```
