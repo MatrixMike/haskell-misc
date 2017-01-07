@@ -25,3 +25,9 @@ get test dependencies
 ```
 cabal install --enable-tests
 ```
+
+show language extensions
+
+```
+ ghc --supported-languages
+```
