@@ -19,3 +19,9 @@ use optimised compiled code in ghci
 ```
 ghci -fobject-code -O2 ff.hs 
 ```
+
+get test dependencies
+
+```
+cabal install --enable-tests
+```
