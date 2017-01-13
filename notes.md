@@ -39,3 +39,10 @@ Prelude Test.QuickCheck Control.Applicative Control.Monad>  quickCheck ((\x y ->
 ```
 Prelude Data.ByteString Control.Monad.Writer Data.Functor.Identity Control.Monad.Trans.Identity Control.Monad.Reader>  runReader ( runWriterT (do {tell [2]  ; lift ask  })) 5000
 ```
+
+
+```
+runWriter(  (do {tell [2,7]  ; x <- pass (tell [300] >>= \z -> return ((),\q -> q++ q++q)) ; tell [9,5]  } )) 
+
+```
+
