@@ -31,3 +31,7 @@ show language extensions
 ```
  ghc --supported-languages
 ```
+
+```
+Prelude Test.QuickCheck Control.Applicative Control.Monad>  quickCheck ((\x y -> (x <|> y )== x `mplus` y)  :: Maybe () -> Maybe () -> Bool )
+```
