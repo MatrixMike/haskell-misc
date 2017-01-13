@@ -35,3 +35,7 @@ show language extensions
 ```
 Prelude Test.QuickCheck Control.Applicative Control.Monad>  quickCheck ((\x y -> (x <|> y )== x `mplus` y)  :: Maybe () -> Maybe () -> Bool )
 ```
+
+```
+Prelude Data.ByteString Control.Monad.Writer Data.Functor.Identity Control.Monad.Trans.Identity Control.Monad.Reader>  runReader ( runWriterT (do {tell [2]  ; lift ask  })) 5000
+```
