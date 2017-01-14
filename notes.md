@@ -46,3 +46,8 @@ runWriter(  (do {tell [2,7]  ; x <- pass (tell [300] >>= \z -> return ((),\q -> 
 
 ```
 
+use imports in ghc one liner
+```
+ghc -e 'import Control.Monad' -e 'replicateM_ 10 (print 1)'
+
+```
