@@ -10,7 +10,7 @@ import Distribution.PackageDescription.Parse
 import Distribution.PackageDescription 
 import Data.Maybe
 
-main =  fmap ( (\(ParseOk _ x) -> x) .  (fmap ( fromJust .  repoLocation . head  .  sourceRepos .   packageDescription) ) . parsePackageDescription) (readFile "lens.cabal") >>= putStrLn
+main =  fmap ( (\(ParseOk _ x) -> x) .  (fmap ( fromJust .  repoLocation . head  .  sourceRepos .   packageDescription) ) . parsePackageDescription) (readFile "$1.cabal") >>= putStrLn
 
 EOF
 
