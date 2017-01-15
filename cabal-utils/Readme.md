@@ -15,6 +15,6 @@ Checking connectivity... done.
 
 Usage 2 update a hackage package with its repository
 ```
-sh getRepo.sh <GITHUB-USER> <GITHUB-REPO-NAME>
-sh getRepo.sh xpika multifile
+sh setRepo.sh <GITHUB-USER> <GITHUB-REPO-NAME>
+sh setRepo.sh xpika multifile
 ```
