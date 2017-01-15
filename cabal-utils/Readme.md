@@ -11,4 +11,3 @@ Receiving objects: 100% (32801/32801), 26.25 MiB | 3.13 MiB/s, done.
 Resolving deltas: 100% (24637/24637), done.
 Checking connectivity... done.
 ```
-# fizz-buzz
