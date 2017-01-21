@@ -1,3 +1,5 @@
+{-# LANGUAGE ApplicativeDo #-}
+
 data Burrito a = Tortilla a
   deriving Show
 
@@ -15,15 +17,24 @@ instance Monad Burrito where
 
 addBeans a = Tortilla (a,Beans)
 
-main = print $ do
+main = do
+       print q
+       print v
+
+q =  do
+       t <- (Tortilla Cheese)
+       t' <- (Tortilla Beans)
+       return (t,t')
+
+v =  do
        t <- (Tortilla Cheese)
        t' <- addBeans t
        return t'
 
 instance Applicative Burrito where
-  (<*>) _ _ = undefined
-  pure = undefined
+  (<*>) (Tortilla f) (Tortilla g) = (Tortilla (f g))
+  pure = Tortilla
 
 instance Functor Burrito where
-  fmap _ = undefined
+  fmap f (Tortilla a) = (Tortilla (f a))
 
