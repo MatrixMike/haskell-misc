@@ -57,3 +57,9 @@ Alternative instance for IO example
 ```
 readFile "/dev/doesntexist" <|> readFile "/dev/null"
 ```
+
+to install text-icu
+```
+cabal install text-icu
+apt-get install libicu-dev
+```
