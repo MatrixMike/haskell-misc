@@ -51,3 +51,15 @@ use imports in ghc one liner
 ghc -e 'import Control.Monad' -e 'replicateM_ 10 (print 1)'
 
 ```
+
+Alternative instance for IO example
+
+```
+readFile "/dev/doesntexist" <|> readFile "/dev/null"
+```
+
+to install text-icu
+```
+cabal install text-icu
+apt-get install libicu-dev
+```
