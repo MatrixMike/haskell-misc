@@ -1,0 +1,6 @@
+Name	Title	Salary	Department	Managing Department	Subordinates
+Dennis	Manager	$33K	Products	Products	11
+Dorris	Manager	$42K	Piñatas	HR	22
+Darren	Manager	$34K	Curly Department	Fries	13
+Dylan	Manager	$54K	Regulations	Fries	18
+Devin	Manager	$64K	Front Desk	BurgerFlipping	23
