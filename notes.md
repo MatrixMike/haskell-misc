@@ -68,5 +68,9 @@ apt-get install libicu-dev
 maybet example
 
 ```
-runMaybeT $ do { x <- lift getLine ; return 3 }          
+runMaybeT $ do { x <- lift getLine ; return 3 }     
+
+or
+
+ Control.Monad.Trans.Maybe>  runMaybeT (do { x <- MaybeT (return $ Just 2) ; return x    })
 ```
