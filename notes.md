@@ -63,3 +63,10 @@ to install text-icu
 cabal install text-icu
 apt-get install libicu-dev
 ```
+
+
+maybet example
+
+```
+runMaybeT $ do { x <- lift getLine ; return 3 }          
+```
