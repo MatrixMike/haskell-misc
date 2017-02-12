@@ -81,4 +81,8 @@ or
 nesting reader monads
 ```
 runReaderT (runReaderT (ReaderT (\x -> ReaderT (\y -> return ([x,y])) )) 'a') 'b'
+
+or more aptly
+
+runReaderT (runReaderT (do { x <- ask;y <- lift ask; return [x,y] } ) 'a') 'b' 
 ```
