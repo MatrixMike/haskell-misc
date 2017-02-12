@@ -73,4 +73,12 @@ runMaybeT $ do { x <- lift getLine ; return 3 }
 or
 
  Control.Monad.Trans.Maybe>  runMaybeT (do { x <- MaybeT (return $ Just 2) ; return x    })
+ 
+ 
+
+```
+
+nesting reader monads
+```
+runReaderT (runReaderT (ReaderT (\x -> ReaderT (\y -> return ([x,y])) )) 'a') 'b'
 ```
