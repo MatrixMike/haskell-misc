@@ -1,4 +1,7 @@
-
+SmallCheck example
+```
+smallCheck 5 (\x -> x == (x::[Char]))
+```
 
 strange operator names
 
