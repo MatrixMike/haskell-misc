@@ -7,7 +7,7 @@ import Pipes.Prelude(drain)
 import Data.Char                                                                                                                                                                                                   
 import Control.Category                                                                                                                                                                                            
                                                                                                                                                                                                                    
-main = runEffect $ t >-> unS ((S u) >>> (S v) ) >-> drain                                                                                                                                                          
+main = runEffectA $  ((S u) >>> (S v) ) >-> drain                                                                                                                                                          
                                                                                                                                                                                                                    
 t = do                                                                                                                                                                                                             
     yield 2                                                                                                                                                                                                        
@@ -29,7 +29,10 @@ myComp = (>->)
                                                                                                                                                                                                                    
 instance Monad m => Category (S m) where                                                                                                                                                                           
   id = undefined                                                                                                                                                                                                   
-  (S f) . (S g) = S (myComp g f)                                                                                                                                                                                   
+  (S f) . (S g) = S (myComp g f) 
+  
+runEffectA x =  (yield () >-> UnS x >-> drain)
+runEffect' x =  (yield () >-> x >-> drain)  
                                                                                                                                                                                                                    
 newtype S m a b = S { unS :: Proxy () a () b m () }                                                                                                                                                                
                                                                                                                                                                                                                    
