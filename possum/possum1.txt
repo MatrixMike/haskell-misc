@@ -1,0 +1,81 @@
+Glasgow Haskell Compiler, Version 8.2.1, stage 2 booted by GHC version 8.0.2
+Using binary package database: /usr/local/lib/ghc-8.2.1/package.conf.d/package.cache
+Using binary package database: /home/mikeh/.ghc/x86_64-linux-8.2.1/package.conf.d/package.cache
+package flags []
+loading package database /usr/local/lib/ghc-8.2.1/package.conf.d
+loading package database /home/mikeh/.ghc/x86_64-linux-8.2.1/package.conf.d
+wired-in package ghc-prim mapped to ghc-prim-0.5.1.0
+wired-in package integer-gmp mapped to integer-gmp-1.0.1.0
+wired-in package base mapped to base-4.10.0.0
+wired-in package rts mapped to rts
+wired-in package template-haskell mapped to template-haskell-2.12.0.0
+wired-in package ghc mapped to ghc-8.2.1
+wired-in package dph-seq not found.
+wired-in package dph-par not found.
+package flags []
+loading package database /usr/local/lib/ghc-8.2.1/package.conf.d
+loading package database /home/mikeh/.ghc/x86_64-linux-8.2.1/package.conf.d
+wired-in package ghc-prim mapped to ghc-prim-0.5.1.0
+wired-in package integer-gmp mapped to integer-gmp-1.0.1.0
+wired-in package base mapped to base-4.10.0.0
+wired-in package rts mapped to rts-1.0
+wired-in package template-haskell mapped to template-haskell-2.12.0.0
+wired-in package ghc mapped to ghc-8.2.1
+wired-in package dph-seq not found.
+wired-in package dph-par not found.
+*** Chasing dependencies:
+Chasing modules from: *possum.hs
+!!! Chasing dependencies: finished in 4.13 milliseconds, allocated 0.755 megabytes
+Stable obj: []
+Stable BCO: []
+Ready for upsweep
+  [NONREC
+      ModSummary {
+         ms_hs_date = 2017-10-14 05:50:39.161157592 UTC
+         ms_mod = Main,
+         ms_textual_imps = [(Nothing, Prelude), (Nothing, System.IO),
+                            (Nothing, Data.Tuple), (Nothing, Data.Maybe), (Nothing, Data.Ord),
+                            (Nothing, Data.List), (Nothing, Data.Char),
+                            (Nothing, Control.Arrow), (Nothing, System.Random),
+                            (Nothing, Text.EditDistance)]
+         ms_srcimps = []
+      }]
+*** Deleting temp files:
+Deleting: 
+compile: input file possum.hs
+*** Checking old interface for Main (use -ddump-hi-diffs for more details):
+*** Parser [Main]:
+!!! Parser [Main]: finished in 8.98 milliseconds, allocated 2.159 megabytes
+*** Renamer/typechecker [Main]:
+!!! Renamer/typechecker [Main]: finished in 77.26 milliseconds, allocated 6.501 megabytes
+
+possum.hs:1:1: error:
+    Could not find module ‘Text.EditDistance’
+    Locations searched:
+      Text/EditDistance.hs
+      Text/EditDistance.lhs
+      Text/EditDistance.hsig
+      Text/EditDistance.lhsig
+  |
+1 | import Text.EditDistance
+  | ^^^^^^^^^^^^^^^^^^^^^^^^
+
+possum.hs:2:1: error:
+    Could not find module ‘System.Random’
+    Locations searched:
+      System/Random.hs
+      System/Random.lhs
+      System/Random.hsig
+      System/Random.lhsig
+  |
+2 | import System.Random
+  | ^^^^^^^^^^^^^^^^^^^^
+Upsweep partially successful.
+*** Deleting temp files:
+Deleting: 
+link(batch): upsweep (partially) failed OR
+   Main.main not exported; not linking.
+*** Deleting temp files:
+Deleting: 
+*** Deleting temp dirs:
+Deleting: 

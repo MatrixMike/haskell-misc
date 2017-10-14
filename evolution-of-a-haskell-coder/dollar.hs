@@ -1,4 +1,4 @@
-
+{-# OPTIONS_GHC -fwarn-missing-signatures #-}
 main = do
        print ((+1) $ 2) -- prelude dollar
        print ((arr (+1)) 2) -- arrow
