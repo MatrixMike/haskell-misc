@@ -1,4 +1,6 @@
-module TwelveDaysOfChristmas where
+--module TwelveDaysOfChristmas where
+-- to make executable remove the module line
+-- then arrange the rhs of 'main =' to be all on one line and copy & paste into cabal repl for production of tree
 
 import Data.Tree
 
@@ -26,6 +28,4 @@ buildChristmasTree (gift:gifts) = Node gift (lowerGifts gifts)
 main = putStrLn . drawTree . buildChristmasTree . map show . zip [1..] . reverse $ gifts
 -}
 main =
-  putStrLn .
-  drawTree . buildChristmasTree . zipWith (curry show) [1 ..] . reverse $
-  gifts
+  putStrLn . drawTree . buildChristmasTree . zipWith (curry show) [1 ..] . reverse $ gifts
