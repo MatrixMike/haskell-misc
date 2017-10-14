@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fwarn-missing-signatures #-}
 import Data.ByteString.UTF8
 import Data.ByteString
 

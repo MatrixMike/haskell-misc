@@ -1,31 +1,32 @@
 --import Midi
-import Wav
-import Music
 import Data.ByteString as BS
---import Midi
+import Music
+import Wav
 
+--import Midi
 main = put_music "baaBaa.wav" baaBaa
 
 --main :: IO ()
 --main = BS.writeFile "baaBaa.mid" (make_music baaBaa)
-
 intro :: Music
-intro  = Sequence [ C, C, G, G ]
+intro = Sequence [C, C, G, G]
 
 run :: Music
-run    = Sequence [ A, B, C, A ]
+run = Sequence [A, B, C, A]
 
 middle :: Music
-middle = Sequence [ F, F, E, E ]
+middle = Sequence [F, F, E, E]
 
 run2 :: Music
-run2   = Sequence [ D, C, D, E ]
+run2 = Sequence [D, C, D, E]
 
 baaBaa :: Music
-baaBaa = Sequence [ Longer 2  intro
-                  , Higher 12 run
-                  , Longer 4  G
-                  , Longer 2  middle
-                  , run2
-                  , Longer 4  C ]
-           
+baaBaa =
+  Sequence
+    [ Longer 2 intro
+    , Higher 12 run
+    , Longer 4 G
+    , Longer 2 middle
+    , run2
+    , Longer 4 C
+    ]

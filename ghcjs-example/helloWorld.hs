@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fwarn-missing-signatures #-}
 {-# LANGUAGE JavaScriptFFI      #-}
 
 import qualified GHCJS.Types    as T

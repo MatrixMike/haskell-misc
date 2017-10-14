@@ -1,5 +1,5 @@
 {- This is a work in progress -}
-
+{-# OPTIONS_GHC -fwarn-missing-signatures #-}
 {-# Language NoMonomorphismRestriction #-}
 import Data.List.Split
 import Data.List

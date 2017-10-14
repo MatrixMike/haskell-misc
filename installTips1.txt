@@ -1,0 +1,15 @@
+Mon 18 Sep 2017 20:41:02 AEST 
+Tue 19 Sep 2017 03:40:13 AEST 
+
+try :
+./BinariesVersionCheck.sh
+maybe need this : stack config set system-ghc --global true
+cabal install juicypixels
+
+I used geany 1.31 to compile : ghc --make "%f"  -v
+
+would like to change source to consistently spell JuicyPixels in the same way the stack.yaml file has it such that :
+grep uicy -ir *  
+works nicely.
+An aim of this lovely project is to show how to create a package or project (need correct word here) that just builds happily after downloading from github.
+
