@@ -46,3 +46,8 @@ treeToList tree = treeToList' [] tree
 treeToList' :: [a] -> BinaryTree a -> [a]
 treeToList' s (Branch x y) = treeToList' (treeToList' s x) y
 treeToList' s (Leaf x) = x : s
+
+{-
+in repl try fromList [6,1,2,3,4,5]
+-}
+
