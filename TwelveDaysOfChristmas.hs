@@ -1,9 +1,11 @@
+{-# OPTIONS_GHC -fwarn-missing-signatures #-}
 --module TwelveDaysOfChristmas where
 -- to make executable remove the module line
 -- then arrange the rhs of 'main =' to be all on one line and copy & paste into cabal repl for production of tree
 
 import Data.Tree
 
+gifts :: [String]
 gifts =
   [ "Drummers Drumming"
   , "Pipers Piping"
@@ -19,6 +21,7 @@ gifts =
   , "Partridge in a Pear Tree"
   ]
 
+buildChristmasTree :: [a] -> Tree a
 buildChristmasTree (gift:gifts) = Node gift (lowerGifts gifts)
   where
     lowerGifts [] = []

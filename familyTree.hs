@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fwarn-missing-signatures #-}
 module FamilyTree where
 
 import Data.Tree.Pretty 

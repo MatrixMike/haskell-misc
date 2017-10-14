@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fwarn-missing-signatures #-}
 import qualified Data.Map as Map
 import System.Random
 

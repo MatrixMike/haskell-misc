@@ -1,4 +1,4 @@
-Usage 1 git pull the repository for a hackage pacakge
+Usage 1 git pull the repository for a hackage package
 
 ```
 sh getRepo.sh lens
