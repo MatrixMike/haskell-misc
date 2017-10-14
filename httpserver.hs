@@ -20,8 +20,8 @@ type RequestHandler = Request String -> IO (Response String)
 
 main = runHttpServer hellowWorldHnadler
 
-hellowWorldHnadler :: RequestHandler
-hellowWorldHnadler _ =
+hellowWorldHandler :: RequestHandler
+hellowWorldHandler _ =
     return $ successResponse $ prettyHtml helloWorldDoc
 
 successResponse :: String -> Response String
