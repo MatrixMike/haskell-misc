@@ -1,10 +1,9 @@
 main = do
        print (primeFactors 53)
        print (
-              (cos 
-                (pi *  
+              cos
+                (pi *
                   ((fac (7-1) + 1)/7)
-                )
               )^2
              )
 

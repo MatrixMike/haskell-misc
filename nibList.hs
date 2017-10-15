@@ -1,19 +1,20 @@
+{-# OPTIONS_GHC -fwarn-missing-signatures #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE FlexibleInstances #-}
 
 import Data.List
 
-data NibList a = Node a (NibList a) | Nib (NibList a) 
+data NibList a = Node a (NibList a) | Nib (NibList a)
   deriving (Eq, Read,Ord)
 
-instance Show a => Show (NibList a) where  
+instance Show a => Show (NibList a) where
   show a = showNib False (lengthNib a+1) a
 
 showNib _ 0 _ = ""
 showNib b x (Node a nl) = if b then "("++t++")" else t
-  where t =  "Node " ++ show a ++ showNib True (x-1) nl  
+  where t =  "Node " ++ show a ++ showNib True (x-1) nl
 showNib b x (Nib nl) = if b then  "("++t++")" else t
-  where t = "Nib" ++ showNib True (x-1) nl  
+  where t = "Nib" ++ showNib True (x-1) nl
 
 lengthNib       (Nib nl) = lengthNib'' nl
 lengthNib             nl = lengthNib' nl

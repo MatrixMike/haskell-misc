@@ -1,5 +1,7 @@
 {-# LANGUAGE GADTs #-}
 
+module Hetero () where
+
 data Hetero where
   Cons :: Show b => b -> Hetero -> Hetero
   Empty :: Hetero

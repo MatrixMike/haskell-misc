@@ -4,14 +4,16 @@
 {-# LANGUAGE IncoherentInstances #-}
 {-# LANGUAGE UndecidableInstances #-}
 
+module Truthy () where
+
 class Truthy a where
   truthy :: a -> Bool
-   
-instance Truthy Bool where 
+
+instance Truthy Bool where
   truthy = id
- 
-instance (Num a,Eq a) => Truthy a where 
+
+instance (Num a,Eq a) => Truthy a where
   truthy = (/= 0)
-  
-instance (Num a,Eq a) => Truthy [a] where 
+
+instance (Num a,Eq a) => Truthy [a] where
   truthy = not . null
