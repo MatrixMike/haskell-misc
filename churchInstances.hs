@@ -19,6 +19,7 @@ instance Num ((r -> r) -> r -> r) where
   fromInteger 1 = \f x -> f x
   fromInteger n = 1 + fromInteger (n - 1)
 
+eg :: Integer
 eg = appEndo (appEndo 1 (Endo (+ 1))) 1
 
 instance Num (Endo (Endo r)) where
