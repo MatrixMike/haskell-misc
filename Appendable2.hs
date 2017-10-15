@@ -1,5 +1,5 @@
 {-# OPTIONS_GHC -fwarn-missing-signatures #-}
-
+-- instructive to load into cabal repl
 data BinaryTree a
   = Branch (BinaryTree a)
            (BinaryTree a)

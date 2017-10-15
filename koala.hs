@@ -1,4 +1,4 @@
-
+{-# OPTIONS_GHC -fwarn-missing-signatures #-}
 --this program is proof that haskell characters are codepoint based.
 
 main :: IO ()

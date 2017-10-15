@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fwarn-missing-signatures #-}
 module MiniLang where
 
 data MiniLang = MLWord String | MLInt Int | MLOp MiniOp
