@@ -19,3 +19,5 @@ tree2 = Node 1 [
 
 main :: IO()
 main = mapM_ putStrLn $ map drawTree $ map (fmap show) $ sort [tree1,tree2]
+
+-- main = mapM_ (putStrLn . map . drawTree . fmap show)  (sort [tree1,tree2])
