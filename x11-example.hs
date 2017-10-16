@@ -3,6 +3,7 @@
 import Control.Concurrent (threadDelay)
 import Control.Monad
 import Data.Bits
+
 {-
  ~/cabal/cabal install  X11
  after some chasing and digging the library below is made available by installing X11  ... 
@@ -37,7 +38,7 @@ main = do
         visual
         attrmask
         attributes
-  setTextProperty dpy win "Hello World" wM_NAME
+  setTextProperty dpy win "Hello my World" wM_NAME
   gc <- createGC dpy win
   mapWindow dpy win
   forM_ (concat $repeat $ [1 .. 100] ++ [99,98 .. 2]) $ \x -> do
@@ -55,8 +56,9 @@ drawInWin :: Integral a => a -> Display -> Drawable -> GC -> IO ()
 drawInWin x dpy win gc = do
   bgcolor <- initColor dpy "green"
   fgcolor <- initColor dpy "blue"
+  fgcolor <- initColor dpy "red"
   setForeground dpy gc bgcolor
-  fillRectangle dpy win gc 0 0 200 200
+  fillRectangle dpy win gc 0 0 100 100
   setForeground dpy gc fgcolor
   fillRectangle dpy win gc (2 + fromIntegral x) 2 96 96
 
