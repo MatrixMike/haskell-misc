@@ -65,10 +65,17 @@ drawInWin x dpy win gc = do
   bgcolor <- initColor dpy "green"
   fgcolor <- initColor dpy "blue"
   fgcolor <- initColor dpy "red"
+{-     let   xx1 = 20
+      x2 = 150
+      y1 = 20
+      y2 = 150 -}
   setForeground dpy gc bgcolor
   fillRectangle dpy win gc 0 0 100 100
   setForeground dpy gc fgcolor
   fillRectangle dpy win gc (2 + fromIntegral x) 2 96 96
+  fgcolor <- initColor dpy "blue"
+ --   setForeground dpy gc fgcolor
+  drawLine dpy win gc  20 20 150 150                 -- x1 y1 x2 y2 
 
 initColor :: Display -> String -> IO Pixel
 initColor dpy color = do
