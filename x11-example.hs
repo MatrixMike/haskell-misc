@@ -64,18 +64,22 @@ drawInWin :: Integral a => a -> Display -> Drawable -> GC -> IO ()
 drawInWin x dpy win gc = do
   bgcolor <- initColor dpy "green"
   fgcolor <- initColor dpy "blue"
+  let   x1 = 20
+        x2 = 150
+        y1 = 20
+        y2 = 150 
   fgcolor <- initColor dpy "red"
-{-     let   xx1 = 20
-      x2 = 150
-      y1 = 20
-      y2 = 150 -}
   setForeground dpy gc bgcolor
   fillRectangle dpy win gc 0 0 100 100
   setForeground dpy gc fgcolor
   fillRectangle dpy win gc (2 + fromIntegral x) 2 96 96
   fgcolor <- initColor dpy "blue"
  --   setForeground dpy gc fgcolor
-  drawLine dpy win gc  20 20 150 150                 -- x1 y1 x2 y2 
+ {-
+ https://tronche.com/gui/x/xlib/graphics/drawing/XDrawLine.html
+ http://www.mit.edu/afs.new/athena/system/i386_deb50/os-ubuntu-9.04/usr/athena/share/doc/ghc6-doc/libraries/x11/Graphics-X11-Xlib-Misc.html
+ -}
+  drawLine dpy win gc  x1 y1 x2 y2                 -- x1 y1 x2 y2 
 
 initColor :: Display -> String -> IO Pixel
 initColor dpy color = do
