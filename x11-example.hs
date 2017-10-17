@@ -15,6 +15,7 @@ import System.Exit (ExitCode(..), exitWith)
 
 main :: IO ()
 main = do
+--    let x1 = 20
   dpy <- openDisplay ""
   let dflt = defaultScreen dpy
       border = blackPixel dpy dflt
@@ -22,7 +23,14 @@ main = do
       scr = defaultScreenOfDisplay dpy
       visual = defaultVisualOfScreen scr
       attrmask = 0
+      x1 = 20
+      x2 = 150
+      y1 = 20
+      y2 = 150     
   rw <- rootWindow dpy dflt
+  let winSizeX = 200
+  let winSizeY = 200
+  
   win <-
     allocaSetWindowAttributes $ \attributes ->
       createWindow
@@ -30,8 +38,8 @@ main = do
         rw
         0
         0
-        200
-        200
+        winSizeX
+        winSizeY
         0
         (defaultDepthOfScreen scr)
         inputOutput
@@ -67,3 +75,5 @@ initColor dpy color = do
   let colormap = defaultColormap dpy (defaultScreen dpy)
   (apros, real) <- allocNamedColor dpy colormap color
   return $ color_pixel apros
+
+--initialiseLine 
