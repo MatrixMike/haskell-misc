@@ -74,13 +74,14 @@ drawInWin x dpy win gc = do
   setForeground dpy gc fgcolor
   fillRectangle dpy win gc (2 + fromIntegral x) 2 96 96
   fgcolor <- initColor dpy "blue"
- --   setForeground dpy gc fgcolor
+  setForeground dpy gc fgcolor
  {-
  https://tronche.com/gui/x/xlib/graphics/drawing/XDrawLine.html
  http://www.mit.edu/afs.new/athena/system/i386_deb50/os-ubuntu-9.04/usr/athena/share/doc/ghc6-doc/libraries/x11/Graphics-X11-Xlib-Misc.html
  -}
   drawLine dpy win gc  x1 y1 x2 y2                 -- x1 y1 x2 y2 
-
+  drawLine dpy win gc  x1 y1 x2 (y2-10)                 -- x1 y1 x2 y2 
+  
 initColor :: Display -> String -> IO Pixel
 initColor dpy color = do
   let colormap = defaultColormap dpy (defaultScreen dpy)
