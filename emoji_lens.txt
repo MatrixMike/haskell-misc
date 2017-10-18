@@ -1,0 +1,10 @@
+GHCi, version 8.2.1: http://www.haskell.org/ghc/  :? for help
+[1 of 1] Compiling Main             ( emoji_lens.hs, interpreted )
+Ok, 1 module loaded.
+(🔎) :: s -> Getting a s a -> a
+(🖌) :: ASetter s t a b -> b -> s -> t
+(🔧) :: ASetter s t a b -> (a -> b) -> s -> t
+(🏇) ::
+  (Applicative f, Traversable t) => (a -> f b) -> t a -> f (t b)
+main :: IO ()
+Leaving GHCi.
