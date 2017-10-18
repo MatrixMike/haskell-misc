@@ -4,6 +4,9 @@ import Text.ParserCombinators.Parsec
 import Data.Maybe
 import Control.Monad
 import Data.Char
+{-
+cabal install text -- was not enough
+-}
 
 main = print $ map (parse parser "") ["{ \"a\t\n\\u007F\" : [true] ,false:{null: -3.2e-5 }}"]
 
