@@ -15,7 +15,6 @@ import System.Exit (ExitCode(..), exitWith)
 
 main :: IO ()
 main = do
---    let x1 = 20
   dpy <- openDisplay ""
   let dflt = defaultScreen dpy
       border = blackPixel dpy dflt
@@ -26,11 +25,10 @@ main = do
       x1 = 20
       x2 = 150
       y1 = 20
-      y2 = 150     
+      y2 = 150
   rw <- rootWindow dpy dflt
   let winSizeX = 200
   let winSizeY = 200
-  
   win <-
     allocaSetWindowAttributes $ \attributes ->
       createWindow
@@ -49,7 +47,7 @@ main = do
   setTextProperty dpy win "Hello my World" wM_NAME
   gc <- createGC dpy win
   mapWindow dpy win
-  forM_ (concat $repeat $ [1 .. 100] ++ [99,98 .. 2]) $ \x -> do
+  forM_ (concat $repeat $ [1 .. 100] ++ [99,98 .. 2]) $ \x -> do  -- lambda see x below
     threadDelay 10000
     clearWindow dpy win
     drawInWin x dpy win gc
@@ -60,14 +58,15 @@ main = do
  exitWith ExitSuccess
  -}
 
+--    let x1 = 20
 drawInWin :: Integral a => a -> Display -> Drawable -> GC -> IO ()
 drawInWin x dpy win gc = do
   bgcolor <- initColor dpy "green"
   fgcolor <- initColor dpy "blue"
-  let   x1 = 20
-        x2 = 150
-        y1 = 20
-        y2 = 150 
+  let x1 = 20
+      x2 = 150
+      y1 = 20
+      y2 = 150
   fgcolor <- initColor dpy "red"
   setForeground dpy gc bgcolor
   fillRectangle dpy win gc 0 0 100 100
@@ -79,13 +78,13 @@ drawInWin x dpy win gc = do
  https://tronche.com/gui/x/xlib/graphics/drawing/XDrawLine.html
  http://www.mit.edu/afs.new/athena/system/i386_deb50/os-ubuntu-9.04/usr/athena/share/doc/ghc6-doc/libraries/x11/Graphics-X11-Xlib-Misc.html
  -}
-  drawLine dpy win gc  x1 y1 x2 y2                 -- x1 y1 x2 y2 
-  drawLine dpy win gc  x1 y1 x2 (y2-10)                 -- x1 y1 x2 y2 
-  
+  drawLine dpy win gc x1 y1 x2 y2 -- x1 y1 x2 y2 
+  drawLine dpy win gc x1 y1 x2 (y2 - 10) -- x1 y1 x2 y2 
+  drawLine dpy win gc x1 y1 x2 (y2 - 20) -- x1 y1 x2 y2 
+
 initColor :: Display -> String -> IO Pixel
 initColor dpy color = do
   let colormap = defaultColormap dpy (defaultScreen dpy)
   (apros, real) <- allocNamedColor dpy colormap color
   return $ color_pixel apros
-
 --initialiseLine 
