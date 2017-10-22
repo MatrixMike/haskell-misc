@@ -1,17 +1,11 @@
+
 {-# OPTIONS_GHC -fwarn-missing-signatures #-}
 
 import Control.Concurrent (threadDelay)
 import Control.Monad
---import Data.Bits
 
-{-
- ~/cabal/cabal install  X11
- after some chasing and digging the library below is made available by installing X11  ... 
- naming system here ?
--}
 import Graphics.X11.Xlib
 import Graphics.X11.Xlib.Extras
---import System.Exit (ExitCode(..), exitWith)
 
 main :: IO ()
 main = do
@@ -89,3 +83,4 @@ initColor dpy color = do
   (apros, real) <- allocNamedColor dpy colormap color
   return $ color_pixel apros
 --initialiseLine 
+

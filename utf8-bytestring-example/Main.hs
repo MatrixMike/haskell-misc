@@ -1,12 +1,12 @@
 {-# OPTIONS_GHC -fwarn-missing-signatures #-}
-import Data.ByteString.UTF8
+--import Data.ByteString.UTF8
 import Data.ByteString
 
 
 main = do
- let myByteString = fromString "字"
- print (Data.ByteString.UTF8.length myByteString)
+ let myByteString = showString "字"
  print (Data.ByteString.length myByteString)
+-- print (Data.ByteString.length myByteString)
  
 {-
 output:
