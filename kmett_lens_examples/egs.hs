@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fwarn-missing-signatures #-}
 import Control.Applicative
 import Control.Lens
 import Data.Char
